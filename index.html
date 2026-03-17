@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ronak Lodhia — ECE Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #E6E6FA;
+    --bg-deep: #D8D8F0;
+    --bg-card: #FFFFFF;
+    --text-primary: #0F172A;
+    --text-secondary: #334155;
+    --accent: #7C3AED;
+    --accent-light: #A78BFA;
+    --accent-glow: rgba(124,58,237,0.18);
+    --border: #E2E8F0;
+    --border-accent: rgba(124,58,237,0.3);
+    --shadow: 0 4px 24px rgba(15,23,42,0.08);
+    --shadow-hover: 0 12px 40px rgba(124,58,237,0.18);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(167,139,250,0.22) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 90%, rgba(124,58,237,0.12) 0%, transparent 55%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%237C3AED' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent-light); border-radius: 3px; }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 64px;
+    background: rgba(230,230,250,0.82);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border-accent);
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 32px rgba(124,58,237,0.10); }
+
+  .nav-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav-links {
+    display: flex; gap: 0.2rem; list-style: none; align-items: center;
+  }
+  .nav-links a {
+    font-size: 0.8rem; font-weight: 500; color: var(--text-secondary);
+    text-decoration: none; padding: 6px 11px; border-radius: 8px;
+    transition: color 0.2s, background 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .nav-links a:hover { color: var(--accent); background: var(--accent-glow); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger span { width: 22px; height: 2px; background: var(--accent); border-radius: 2px; transition: 0.3s; }
+
+  .mobile-menu {
+    display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
+    background: rgba(230,230,250,0.97); backdrop-filter: blur(20px);
+    padding: 1.5rem 2rem; border-bottom: 1px solid var(--border);
+    flex-direction: column; gap: 0.5rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-size: 0.95rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .mobile-menu a:hover { color: var(--accent); }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    padding: 100px 5vw 60px;
+    position: relative;
+  }
+
+  .hero-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent-glow); border: 1px solid var(--border-accent);
+    border-radius: 100px; padding: 6px 16px;
+    font-size: 0.78rem; font-weight: 500; color: var(--accent);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 1.8rem;
+    width: fit-content;
+  }
+  .hero-chip::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; animation: pulse 2s infinite; }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1.06;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+    margin-bottom: 0.6rem;
+  }
+  .hero-name span { color: var(--accent); }
+
+  .hero-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-bottom: 1.6rem;
+  }
+
+  .hero-bio {
+    font-size: clamp(0.92rem, 1.4vw, 1.05rem);
+    color: var(--text-secondary);
+    max-width: 640px;
+    margin-bottom: 2.2rem;
+    line-height: 1.75;
+  }
+
+  .hero-contact {
+    display: flex; flex-wrap: wrap; gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  .contact-pill {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 18px; border-radius: 100px;
+    font-size: 0.82rem; font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+  }
+  .contact-pill:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); color: var(--accent); border-color: var(--border-accent); }
+  .contact-pill svg { width: 15px; height: 15px; fill: currentColor; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--text-primary); color: #fff;
+    padding: 12px 28px; border-radius: 100px;
+    font-weight: 600; font-size: 0.9rem; text-decoration: none;
+    transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+    letter-spacing: 0.02em;
+    border: none; cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,58,237,0.3); }
+
+  /* Stats */
+  .hero-stats {
+    display: flex; flex-wrap: wrap; gap: 1.2rem;
+    margin-top: 3.5rem;
+  }
+  .stat-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 1.2rem 1.8rem;
+    min-width: 170px; text-align: center;
+    box-shadow: var(--shadow);
+    transition: transform 0.25s, box-shadow 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .stat-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 60%, var(--accent-glow));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .stat-card:hover::before { opacity: 1; }
+  .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+  .stat-value { font-size: 2rem; font-weight: 800; color: var(--accent); line-height: 1.1; }
+  .stat-label { font-size: 0.73rem; color: var(--text-secondary); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 4px; font-weight: 500; }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 90px 5vw; }
+
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem; font-weight: 500; color: var(--accent);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .section-tag::before { content: '//'; opacity: 0.5; }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+    line-height: 1.15;
+  }
+
+  /* ─── EDUCATION ─── */
+  #education { background: transparent; }
+
+  .edu-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2.5rem;
+    box-shadow: var(--shadow);
+    max-width: 760px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .edu-card::after {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent-light));
+    border-radius: 4px 0 0 4px;
+  }
+  .edu-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+
+  .edu-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
+  .edu-uni { font-family: 'DM Serif Display', serif; font-size: 1.35rem; color: var(--text-primary); }
+  .edu-degree { font-size: 0.95rem; font-weight: 600; color: var(--accent); margin-bottom: 0.5rem; }
+  .edu-date { font-size: 0.78rem; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; background: var(--bg); padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border); white-space: nowrap; }
+  .edu-detail { font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.4rem; }
+  .edu-cgpa { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-glow); color: var(--accent); padding: 4px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; margin-top: 0.8rem; border: 1px solid var(--border-accent); }
+
+  /* ─── PROJECTS ─── */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.8rem; }
+
+  .project-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex; flex-direction: column; gap: 1rem;
+    position: relative; overflow: hidden;
+  }
+  .project-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
+  .project-card:hover .project-num { opacity: 0.15; }
+
+  .project-num {
+    position: absolute; top: -10px; right: 16px;
+    font-family: 'DM Serif Display', serif; font-size: 6rem;
+    color: var(--accent); opacity: 0.06; line-height: 1;
+    transition: opacity 0.3s; user-select: none; pointer-events: none;
+  }
+
+  .project-title { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); }
+
+  .project-desc ul { padding-left: 1.2rem; }
+  .project-desc li { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0.35rem; }
+
+  .tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; }
+  .tech-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; font-weight: 500;
+    padding: 3px 10px; border-radius: 6px;
+    background: var(--bg); color: var(--accent);
+    border: 1px solid var(--border-accent);
+    letter-spacing: 0.03em;
+  }
+
+  /* ─── SKILLS ─── */
+  #skills { background: transparent; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+
+  .skill-category {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.8rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .skill-category:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+
+  .skill-cat-title {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1.2rem; display: flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .skill-cat-title::before { content: ''; width: 22px; height: 2px; background: var(--accent); display: block; border-radius: 1px; }
+
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .skill-pill {
+    font-size: 0.78rem; padding: 5px 13px; border-radius: 8px;
+    background: var(--bg); color: var(--text-secondary);
+    border: 1px solid var(--border); font-weight: 500;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+    cursor: default;
+  }
+  .skill-pill:hover { background: var(--accent-glow); color: var(--accent); border-color: var(--border-accent); transform: translateY(-1px); }
+
+  /* ─── COURSES ─── */
+  .courses-list { display: flex; flex-direction: column; gap: 1.4rem; max-width: 860px; }
+
+  .course-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem;
+    box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 0.9rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .course-card::before {
+    content: ''; position: absolute; right: -20px; top: -20px;
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--accent-glow); opacity: 0; transition: opacity 0.3s;
+  }
+  .course-card:hover::before { opacity: 1; }
+  .course-card:hover { transform: translateX(6px); box-shadow: var(--shadow-hover); }
+
+  .course-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.8rem; }
+  .course-title { font-size: 1.05rem; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+  .course-inst { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--accent); padding: 3px 11px; border-radius: 20px; background: var(--accent-glow); border: 1px solid var(--border-accent); white-space: nowrap; }
+  .course-instructor { font-size: 0.82rem; color: var(--text-secondary); }
+  .course-topics { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .course-topic { font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; background: var(--bg); color: var(--text-secondary); border: 1px solid var(--border); }
+
+  /* ─── WORKSHOPS ─── */
+  .workshop-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2.5rem;
+    box-shadow: var(--shadow); max-width: 760px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .workshop-card::after {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    background: linear-gradient(to bottom, var(--accent-light), var(--accent));
+    border-radius: 4px 0 0 4px;
+  }
+  .workshop-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+  .workshop-title { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1rem; }
+  .workshop-desc ul { padding-left: 1.2rem; }
+  .workshop-desc li { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0.45rem; }
+
+  /* ─── SPORTS ─── */
+  .sports-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; max-width: 860px; }
+
+  .sport-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.8rem;
+    box-shadow: var(--shadow); text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .sport-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
+
+  .sport-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--accent-glow); border: 2px solid var(--border-accent);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem; font-size: 1.5rem;
+  }
+  .sport-level {
+    display: inline-block; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 11px; border-radius: 20px; margin-bottom: 0.6rem;
+  }
+  .sport-level.national { background: linear-gradient(135deg, #FFD700, #FFA500); color: #7a4800; }
+  .sport-level.state { background: var(--accent-glow); color: var(--accent); border: 1px solid var(--border-accent); }
+
+  .sport-title { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.35rem; }
+  .sport-detail { font-size: 0.8rem; color: var(--text-secondary); }
+
+  .medal-badge {
+    position: absolute; top: 12px; right: 12px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, #CD7F32, #A0522D);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; color: white; font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .medal-badge.bronze { background: linear-gradient(135deg, #CD7F32, #A0522D); }
+
+  /* ─── SOCIAL WORK ─── */
+  .social-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2.5rem;
+    box-shadow: var(--shadow); max-width: 760px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex; gap: 2rem; align-items: flex-start;
+  }
+  .social-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+  .social-icon-box {
+    flex-shrink: 0; width: 60px; height: 60px;
+    background: var(--accent-glow); border-radius: var(--radius-sm);
+    border: 1px solid var(--border-accent);
+    display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
+  }
+  .social-org { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--text-primary); margin-bottom: 0.8rem; }
+  .social-desc ul { padding-left: 1.2rem; }
+  .social-desc li { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0.4rem; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--text-primary); color: rgba(255,255,255,0.9);
+    padding: 4rem 5vw 2.5rem;
+    text-align: center;
+  }
+  .footer-name { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #fff; margin-bottom: 0.4rem; }
+  .footer-sub { font-size: 0.85rem; color: rgba(255,255,255,0.55); margin-bottom: 0.3rem; }
+  .footer-links { display: flex; justify-content: center; gap: 1.2rem; margin: 1.8rem 0; flex-wrap: wrap; }
+  .footer-link {
+    color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; font-weight: 500;
+    padding: 7px 18px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15);
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .footer-link:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .footer-cta { font-size: 0.88rem; color: rgba(255,255,255,0.45); max-width: 420px; margin: 0 auto 2rem; line-height: 1.7; }
+  .footer-bottom { font-size: 0.75rem; color: rgba(255,255,255,0.25); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; }
+
+  /* ─── REVEAL ANIMATION ─── */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .social-card { flex-direction: column; gap: 1.2rem; }
+    .edu-header { flex-direction: column; }
+  }
+  @media (max-width: 480px) {
+    section { padding: 60px 5vw; }
+    .hero-name { font-size: 2.6rem; }
+    .stat-card { min-width: 140px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#home" class="nav-brand">Ronak Lodhia</a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#workshops">Workshops</a></li>
+    <li><a href="#sports">Sports</a></li>
+    <li><a href="#socialwork">Social Work</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="closeMenu()">Home</a>
+  <a href="#education" onclick="closeMenu()">Education</a>
+  <a href="#projects" onclick="closeMenu()">Projects</a>
+  <a href="#skills" onclick="closeMenu()">Skills</a>
+  <a href="#courses" onclick="closeMenu()">Courses</a>
+  <a href="#workshops" onclick="closeMenu()">Workshops</a>
+  <a href="#sports" onclick="closeMenu()">Sports</a>
+  <a href="#socialwork" onclick="closeMenu()">Social Work</a>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-chip reveal">ECE · VLSI · Computer Architecture</div>
+
+  <h1 class="hero-name reveal reveal-delay-1">
+    Ronak<br><span>Lodhia</span>
+  </h1>
+
+  <p class="hero-role reveal reveal-delay-2">
+    &lt; Electronics &amp; Communication Engineering /&gt;
+  </p>
+
+  <p class="hero-bio reveal reveal-delay-2">
+    ECE student at Pandit Deendayal Energy University with deep interests in VLSI design, computer architecture and processor design. Experienced in digital logic, RTL design, simulation tools and hardware system modeling. Passionate about building processors, advanced chip design flows and emerging computing technologies.
+  </p>
+
+  <div class="hero-contact reveal reveal-delay-3">
+    <a href="tel:+919376215464" class="contact-pill">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+      +91 9376215464
+    </a>
+    <a href="mailto:ronaklodhia100@gmail.com" class="contact-pill">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      ronaklodhia100@gmail.com
+    </a>
+    <a href="https://linkedin.com/in/ronak-lodhia-b87352321" target="_blank" class="contact-pill">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <a href="tel:+919376215464" class="contact-pill">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      Gandhinagar, Gujarat
+    </a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-card reveal reveal-delay-1">
+      <div class="stat-value">8.7</div>
+      <div class="stat-label">CGPA</div>
+    </div>
+    <div class="stat-card reveal reveal-delay-2">
+      <div class="stat-value" style="font-size:1rem;font-weight:700;padding-top:0.3rem">ECE</div>
+      <div class="stat-label">Major</div>
+    </div>
+    <div class="stat-card reveal reveal-delay-3">
+      <div class="stat-value" style="font-size:0.7rem;font-weight:700;line-height:1.4;padding:0.2rem 0">PDEU</div>
+      <div class="stat-label">University</div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-tag reveal">Education</div>
+  <h2 class="section-title reveal">Academic Background</h2>
+
+  <div class="edu-card reveal">
+    <div class="edu-header">
+      <div>
+        <div class="edu-uni">Pandit Deendayal Energy University</div>
+        <div class="edu-degree">B.Tech Electronics &amp; Communication Engineering</div>
+        <div class="edu-detail">📍 Gandhinagar, Gujarat, India</div>
+        <div class="edu-cgpa">⭐ CGPA: 8.7 / 10</div>
+      </div>
+      <div class="edu-date">Aug 2023 – Present</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-tag reveal">Projects</div>
+  <h2 class="section-title reveal">Featured Work</h2>
+
+  <div class="projects-grid">
+    <div class="project-card reveal reveal-delay-1">
+      <div class="project-num">01</div>
+      <div class="project-title">8-bit CPU Design</div>
+      <div class="project-desc">
+        <ul>
+          <li>Built a complete 8-bit Central Processing Unit using Digital Logic Sim software.</li>
+          <li>Designed the memory architecture and arithmetic logic unit.</li>
+          <li>Implemented instruction execution flow and control logic.</li>
+        </ul>
+      </div>
+      <div class="tech-tags">
+        <span class="tech-tag">Digital Logic</span>
+        <span class="tech-tag">Computer Architecture</span>
+        <span class="tech-tag">CPU Design</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal reveal-delay-2">
+      <div class="project-num">02</div>
+      <div class="project-title">R-2R Ladder ADC</div>
+      <div class="project-desc">
+        <ul>
+          <li>Designed and implemented an Analog to Digital Converter using an R-2R resistor ladder.</li>
+          <li>Constructed a breadboard circuit to convert analog voltage levels into corresponding digital binary outputs.</li>
+        </ul>
+      </div>
+      <div class="tech-tags">
+        <span class="tech-tag">Analog Electronics</span>
+        <span class="tech-tag">ADC Design</span>
+        <span class="tech-tag">Digital Systems</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-tag reveal">Skills</div>
+  <h2 class="section-title reveal">Technical Expertise</h2>
+
+  <div class="skills-grid">
+    <div class="skill-category reveal reveal-delay-1">
+      <div class="skill-cat-title">VLSI &amp; Digital Design</div>
+      <div class="skill-pills">
+        <span class="skill-pill">Verilog</span>
+        <span class="skill-pill">VHDL</span>
+        <span class="skill-pill">CMOS Design</span>
+        <span class="skill-pill">Static Timing Analysis</span>
+        <span class="skill-pill">Verification</span>
+        <span class="skill-pill">Boolean Algebra</span>
+        <span class="skill-pill">Digital Logic Design</span>
+      </div>
+    </div>
+
+    <div class="skill-category reveal reveal-delay-2">
+      <div class="skill-cat-title">Computer Architecture</div>
+      <div class="skill-pills">
+        <span class="skill-pill">RISC-V</span>
+        <span class="skill-pill">Processor Design</span>
+        <span class="skill-pill">RTL Design</span>
+        <span class="skill-pill">Memory Architectures</span>
+        <span class="skill-pill">Instruction Set Architecture</span>
+        <span class="skill-pill">Computer Arithmetic</span>
+      </div>
+    </div>
+
+    <div class="skill-category reveal reveal-delay-3">
+      <div class="skill-cat-title">Simulation &amp; Design Tools</div>
+      <div class="skill-pills">
+        <span class="skill-pill">LTspice</span>
+        <span class="skill-pill">TinaTI</span>
+        <span class="skill-pill">Proteus</span>
+        <span class="skill-pill">KiCad</span>
+        <span class="skill-pill">Altium</span>
+        <span class="skill-pill">MATLAB</span>
+        <span class="skill-pill">Simulink</span>
+        <span class="skill-pill">SolidWorks</span>
+      </div>
+    </div>
+
+    <div class="skill-category reveal reveal-delay-1">
+      <div class="skill-cat-title">Programming</div>
+      <div class="skill-pills">
+        <span class="skill-pill">C</span>
+        <span class="skill-pill">C++</span>
+        <span class="skill-pill">Embedded C</span>
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">Microcontroller Programming</span>
+        <span class="skill-pill">Git</span>
+        <span class="skill-pill">GitHub</span>
+      </div>
+    </div>
+
+    <div class="skill-category reveal reveal-delay-2">
+      <div class="skill-cat-title">Analytical Skills</div>
+      <div class="skill-pills">
+        <span class="skill-pill">Data Analysis</span>
+        <span class="skill-pill">Excel</span>
+        <span class="skill-pill">Critical Thinking</span>
+        <span class="skill-pill">Technical Communication</span>
+        <span class="skill-pill">Fast Learning Ability</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses">
+  <div class="section-tag reveal">Courses</div>
+  <h2 class="section-title reveal">Certifications &amp; Learning</h2>
+
+  <div class="courses-list">
+    <div class="course-card reveal">
+      <div class="course-header">
+        <div class="course-title">Digital Design and Computer Architecture</div>
+        <span class="course-inst">ETH Zurich</span>
+      </div>
+      <div class="course-instructor">Instructor: Onur Mutlu</div>
+      <div class="course-topics">
+        <span class="course-topic">Memory Architecture</span>
+        <span class="course-topic">Instruction Sets</span>
+        <span class="course-topic">GPU Architecture</span>
+        <span class="course-topic">Cache Systems</span>
+        <span class="course-topic">Verilog HDL</span>
+      </div>
+    </div>
+
+    <div class="course-card reveal">
+      <div class="course-header">
+        <div class="course-title">VLSI Design Flow: RTL to GDSII</div>
+        <span class="course-inst">NPTEL · IIT Delhi</span>
+      </div>
+      <div class="course-topics">
+        <span class="course-topic">Logic Synthesis</span>
+        <span class="course-topic">Verification</span>
+        <span class="course-topic">Physical Design</span>
+        <span class="course-topic">Testing</span>
+        <span class="course-topic">OpenSTA</span>
+        <span class="course-topic">OpenROAD</span>
+      </div>
+    </div>
+
+    <div class="course-card reveal">
+      <div class="course-header">
+        <div class="course-title">Introduction to Quantum Computing</div>
+        <span class="course-inst">NPTEL · IIT Madras</span>
+      </div>
+      <div class="course-topics">
+        <span class="course-topic">Quantum Circuits</span>
+        <span class="course-topic">Quantum Algorithms</span>
+        <span class="course-topic">Entanglement</span>
+        <span class="course-topic">Superposition</span>
+        <span class="course-topic">Qiskit</span>
+      </div>
+    </div>
+
+    <div class="course-card reveal">
+      <div class="course-header">
+        <div class="course-title">Fundamentals of Semiconductor Devices</div>
+        <span class="course-inst">NPTEL · IISc Bangalore</span>
+      </div>
+      <div class="course-topics">
+        <span class="course-topic">Energy Bands</span>
+        <span class="course-topic">PN Junctions</span>
+        <span class="course-topic">MOSFETs</span>
+        <span class="course-topic">BJTs</span>
+        <span class="course-topic">Optoelectronics</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKSHOPS -->
+<section id="workshops">
+  <div class="section-tag reveal">Workshops</div>
+  <h2 class="section-title reveal">Hands-On Training</h2>
+
+  <div class="workshop-card reveal">
+    <div class="workshop-title">VLSI Design Flow: RTL to GDSII using Synopsys Tools</div>
+    <div class="workshop-desc">
+      <ul>
+        <li>Designed a bit sequence detector using a Moore machine state-based approach.</li>
+        <li>Worked with Synopsys industry tools including PrimeTime, ICC2, DC Shell and Verdi.</li>
+        <li>Performed synthesis, placement, timing constraint optimization.</li>
+        <li>Achieved timing slack of less than 1 ns, meeting performance targets.</li>
+      </ul>
+    </div>
+    <div class="tech-tags" style="margin-top:1.2rem">
+      <span class="tech-tag">Synopsys</span>
+      <span class="tech-tag">PrimeTime</span>
+      <span class="tech-tag">ICC2</span>
+      <span class="tech-tag">DC Shell</span>
+      <span class="tech-tag">Verdi</span>
+      <span class="tech-tag">Moore Machine</span>
+    </div>
+  </div>
+</section>
+
+<!-- SPORTS -->
+<section id="sports">
+  <div class="section-tag reveal">Sports</div>
+  <h2 class="section-title reveal">Athletic Achievements</h2>
+
+  <div class="sports-grid">
+    <div class="sport-card reveal reveal-delay-1">
+      <div class="medal-badge bronze">🥉</div>
+      <div class="sport-icon">⛸️</div>
+      <div class="sport-level national">National Level</div>
+      <div class="sport-title">Roller Skating</div>
+      <div class="sport-detail">Bronze Medal Winner at National Level Competition</div>
+    </div>
+
+    <div class="sport-card reveal reveal-delay-2">
+      <div class="sport-icon">⚽</div>
+      <div class="sport-level state">State Level</div>
+      <div class="sport-title">Football</div>
+      <div class="sport-detail">State Level Player — represented at state-wide tournaments</div>
+    </div>
+
+    <div class="sport-card reveal reveal-delay-3">
+      <div class="sport-icon">🎯</div>
+      <div class="sport-level state">State Level</div>
+      <div class="sport-title">Roller Ball</div>
+      <div class="sport-detail">State Level Player — competitive roller ball representation</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL WORK -->
+<section id="socialwork">
+  <div class="section-tag reveal">Social Work</div>
+  <h2 class="section-title reveal">Community Contribution</h2>
+
+  <div class="social-card reveal">
+    <div class="social-icon-box">🤝</div>
+    <div>
+      <div class="social-org">Baroda Youth Federation</div>
+      <div class="social-desc">
+        <ul>
+          <li>Contributed to the upliftment of marginalized children and underprivileged communities.</li>
+          <li>Conducted educational sessions covering Mathematics, Science and Yoga.</li>
+          <li>Organized distribution of clothes and food supplies to those in need.</li>
+          <li>Encouraged children to pursue education, build confidence and realize their potential.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Ronak Lodhia</div>
+  <div class="footer-sub">Electronics and Communication Engineering</div>
+  <div class="footer-sub">Pandit Deendayal Energy University</div>
+  <p class="footer-cta">Open to internships and research opportunities in VLSI, processor design and hardware systems.</p>
+  <div class="footer-links">
+    <a href="https://linkedin.com/in/ronak-lodhia-b87352321" target="_blank" class="footer-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <a href="mailto:ronaklodhia100@gmail.com" class="footer-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      Email
+    </a>
+  </div>
+  <div class="footer-bottom">© 2025 Ronak Lodhia · Built with passion for hardware &amp; design</div>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
